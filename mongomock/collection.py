@@ -1590,6 +1590,9 @@ class Cursor(object):
     def __getitem__(self, index):
         arr = [x for x in self._dataset]
         self._dataset = iter(arr)
+        if isinstance(arr[index], list):
+            # return iter(arr[index])
+            return Cursor(self.collection, functools.partial(iter, arr[index]), self._limit)
         return arr[index]
 
 
